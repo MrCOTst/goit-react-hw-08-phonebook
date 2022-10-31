@@ -58,7 +58,7 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
 
     const visibleContacts = this.getVisibleContacts();
 
@@ -69,7 +69,9 @@ export class App extends Component {
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList contacts={visibleContacts} onDelete={this.deleteContact} />
+        {contacts.length > 0 &&
+        <ContactList contacts={visibleContacts} onDelete={this.deleteContact} />}
+        
       </div>
     );
   }
