@@ -1,25 +1,22 @@
 import PropTypes from 'prop-types';
 
-function ContactList({ contacts, onDelete }) {
-  return (
-    <ul className="Contact__list">
-      {contacts.map(item => (
-        <li
-          className="Contact__item"
-          key={item.id}
-          style={{ backgroundColor: getRandomHexColor() }}
-        >
-          {item.name}: {item.number}
-          <button
-            onClick={() => onDelete(item.id)}
-            className="Button Button__contact"
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
+export default function ContactList({ contacts, onDelete }) {
+  const contactItem = contacts.map(({ id, name, number }) => {
+    return (
+      <li
+        className="Contact__item"
+        key={id}
+        style={{ backgroundColor: getRandomHexColor() }}
+      >
+        {name}: {number}
+        <button onClick={() => onDelete(id)} className="Button Button__contact">
+          Delete
+        </button>
+      </li>
+    );
+  });
+  
+  return <ul className="Contact__list">{contactItem}</ul>;
 }
 
 ContactList.propTypes = {
@@ -35,4 +32,3 @@ ContactList.propTypes = {
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
-export default ContactList;
