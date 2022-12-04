@@ -7,33 +7,39 @@ export default function ContactList() {
   const contacts = useSelector(getContacts);
   const filterValue = useSelector(getFilterValue);
   const dispatch = useDispatch();
+  console.log(filterValue);
 
   const handleDelete = id => dispatch(deleteContact(id));
 
-  const getVisibleContacts = (contacts, filter) => {
-        return contacts.filter(contact =>
+  let getVisibleContacts = (contacts, filter) => {
+    
+      return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
   const visibleContacts = getVisibleContacts(contacts, filterValue);
+  console.log(contacts);
 
   return (
     <>
-    <ul className="Contact__list">
-      {visibleContacts.map(({id, name, number}) => (
-        <li
-          className="Contact__item"
-          key={id}
-          style={{ backgroundColor: getRandomHexColor() }}
-        >
-          {name}: {number}
-        <button type="button" onClick={() => handleDelete(id)} className="Button Button__contact">
-          Delete
-        </button>
-        </li>
-      ))};
-    </ul>
+    {contacts.length > 0 && (
+        <ul className="Contact__list">
+        {visibleContacts.map(({id, name, number}) => (
+          <li
+            className="Contact__item"
+            key={id}
+            style={{ backgroundColor: getRandomHexColor() }}
+          >
+            {name}: {number}
+          <button type="button" onClick={() => handleDelete(id)} className="Button Button__contact">
+            Delete
+          </button>
+          </li>
+        ))}
+      </ul>
+      )}
+    
     </>
   );
 };
