@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
+import { NotificationManager } from 'react-notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
+import {
+  PhonebookForm,
+  PhonebookLabel,
+  PhonebookInput,
+  PhonebookButton,
+} from './ContactForm.styled';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -9,7 +16,7 @@ export default function ContactForm() {
   const dispatch = useDispatch();
   const contact = useSelector(getContacts);
 
-  const formAddContact = (name, number) => dispatch(addContact(name, number)); 
+  const formAddContact = (name, number) => dispatch(addContact(name, number));
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -28,54 +35,50 @@ export default function ContactForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    
+
     const normalizedName = name.toLowerCase();
     const availableContact = contact.find(
       contact => contact.name.toLowerCase() === normalizedName
     );
 
     if (availableContact) {
-      alert(`${contact.name} is already in contacts`);
+      NotificationManager.info(`${name} is already in contacts`);
       return;
     } else {
       formAddContact(name, number);
-    };
+    }
 
     setName('');
     setNumber('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="Phonebook__form">
-      <label className="Phonebook__label">
+    <PhonebookForm onSubmit={handleSubmit}>
+      <PhonebookLabel>
         Name
-        <input
+        <PhonebookInput
           type="text"
           name="name"
           value={name}
           onChange={handleChange}
-          className="Phonebook__input"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
-      </label>
-      <label className="Phonebook__label">
+      </PhonebookLabel>
+      <PhonebookLabel>
         Number
-        <input
+        <PhonebookInput
           type="tel"
           name="number"
           value={number}
           onChange={handleChange}
-          className="Phonebook__input"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
-      </label>
-      <button type="submit" className="Button">
-        Add contact
-      </button>
-    </form>
+      </PhonebookLabel>
+      <PhonebookButton type="submit">Add contact</PhonebookButton>
+    </PhonebookForm>
   );
 }

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { getContacts, getFilterValue } from 'redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contactsSlice';
+import { ContactUl, ContactItem, ContactButton } from './ContactList.styled';
 
 export default function ContactList() {
   const contacts = useSelector(getContacts);
@@ -12,8 +13,7 @@ export default function ContactList() {
   const handleDelete = id => dispatch(deleteContact(id));
 
   let getVisibleContacts = (contacts, filter) => {
-    
-      return contacts.filter(contact =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
@@ -23,30 +23,28 @@ export default function ContactList() {
 
   return (
     <>
-    {contacts.length > 0 && (
-        <ul className="Contact__list">
-        {visibleContacts.map(({id, name, number}) => (
-          <li
-            className="Contact__item"
-            key={id}
-            style={{ backgroundColor: getRandomHexColor() }}
-          >
-            {name}: {number}
-          <button type="button" onClick={() => handleDelete(id)} className="Button Button__contact">
-            Delete
-          </button>
-          </li>
-        ))}
-      </ul>
+      {contacts.length > 0 && (
+        <ContactUl>
+          {visibleContacts.map(({ id, name, number }) => (
+            <ContactItem
+              key={id}
+              style={{ backgroundColor: getRandomHexColor() }}
+            >
+              {name}: {number}
+              <ContactButton type="button" onClick={handleDelete}>
+                Delete
+              </ContactButton>
+            </ContactItem>
+          ))}
+        </ContactUl>
       )}
-    
     </>
   );
-};
+}
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-};
+}
 
 ContactList.propTypes = {
   handleDelete: PropTypes.func,
