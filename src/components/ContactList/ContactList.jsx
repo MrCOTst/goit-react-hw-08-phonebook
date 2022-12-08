@@ -1,43 +1,50 @@
 import PropTypes from 'prop-types';
-import { getContacts, getFilterValue } from 'redux/selectors';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
-import { ContactUl, ContactItem, ContactButton } from './ContactList.styled';
+// import { getFilterValue } from 'redux/selectors';
+// import {  useSelector } from 'react-redux';
+// import { deleteContact } from 'redux/contactsSlice';
+import { ContactUl, ContactItem } from './ContactList.styled';
+import { useGetContactsQuery } from '..//../redux/contactsSliceApi';
 
 export default function ContactList() {
-  const contacts = useSelector(getContacts);
-  const filterValue = useSelector(getFilterValue);
-  const dispatch = useDispatch();
-  console.log(filterValue);
+  // const contacts = useSelector(getContacts);
+  // const filterValue = useSelector(getFilterValue);
+  // const dispatch = useDispatch();
+  // console.log(filterValue);
 
-  const handleDelete = id => dispatch(deleteContact(id));
+  const { data, error, isLoading } = useGetContactsQuery();
+  console.log('data:', data);
+  console.log('error:', error);
+  console.log('isLoading:', isLoading);
 
-  let getVisibleContacts = (contacts, filter) => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+  // const handleDelete = id => dispatch(deleteContact(id));
 
-  const visibleContacts = getVisibleContacts(contacts, filterValue);
-  console.log(contacts);
+  // let getVisibleContacts = (contacts, filter) => {
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(filter.toLowerCase())
+  //   );
+  // };
+
+  // const visibleContacts = getVisibleContacts(contacts, filterValue);
+ 
 
   return (
     <>
-      {contacts.length > 0 && (
+      {/* {error && <p>Помилка завантаження, спробуйте ще раз </p>}
+
+      {isLoading ? (
+        <b>Завантаження</b>
+      ) : (
         <ContactUl>
-          {visibleContacts.map(({ id, name, number }) => (
-            <ContactItem
-              key={id}
+          {contacts.map(contact => (
+            <li
+              key={contact.id}
               style={{ backgroundColor: getRandomHexColor() }}
             >
-              {name}: {number}
-              <ContactButton type="button" onClick={handleDelete}>
-                Delete
-              </ContactButton>
-            </ContactItem>
+              <ContactItem contact={contact} />
+            </li>
           ))}
         </ContactUl>
-      )}
+      )} */}
     </>
   );
 }
@@ -47,7 +54,7 @@ function getRandomHexColor() {
 }
 
 ContactList.propTypes = {
-  handleDelete: PropTypes.func,
+  
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

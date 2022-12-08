@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NotificationManager } from 'react-notifications';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+// import { useDispatch } from 'react-redux';
+// import { addContact } from 'redux/contactsSlice';
+// import { getContacts } from 'redux/selectors';
+import {useGetContactsQuery, useAddContactMutation} from '..//../redux/contactsSliceApi'
 import {
   PhonebookForm,
   PhonebookLabel,
@@ -12,11 +13,14 @@ import {
 
 export default function ContactForm() {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const contact = useSelector(getContacts);
+  const [phone, setPhone] = useState('');
+  // const dispatch = useDispatch();
+  // const contact = useSelector(getContacts);
 
-  const formAddContact = (name, number) => dispatch(addContact(name, number));
+  const { data: contact, } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
+
+  // const formAddContact = (name, number) => dispatch(addContact(name, number));
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -24,8 +28,8 @@ export default function ContactForm() {
         setName(event.target.value);
         break;
 
-      case 'number':
-        setNumber(event.target.value);
+      case 'phone':
+        setPhone(event.target.value);
         break;
 
       default:
@@ -33,8 +37,8 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = async value => {
+    value.preventDefault();
 
     const normalizedName = name.toLowerCase();
     const availableContact = contact.find(
@@ -42,14 +46,20 @@ export default function ContactForm() {
     );
 
     if (availableContact) {
-      NotificationManager.info(`${name} is already in contacts`);
+      NotificationManager.info(`${name} is already in contacts!`);
       return;
     } else {
-      formAddContact(name, number);
+      try {
+        await addContact(value);
+        NotificationManager.success(`${name} successfully added!`, 3000);
+      } catch (error) {
+        NotificationManager.error('Error adding data!');
+        console.log(error);
+      }
     }
 
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -70,8 +80,8 @@ export default function ContactForm() {
         Number
         <PhonebookInput
           type="tel"
-          name="number"
-          value={number}
+          name="phone"
+          value={phone}
           onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
