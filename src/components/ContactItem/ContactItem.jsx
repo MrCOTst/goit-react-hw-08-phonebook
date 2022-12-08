@@ -1,13 +1,14 @@
-import { ContactButton } from './ContactList.styled';
-import { useAddContactMutation } from '..//../redux/contactsSliceApi';
+import { ContactButton } from './ContactItem.styled';
+import { useDeleteContactMutation } from '..//../redux/contactsSliceApi';
 
-export const ContactItem = ({ id, name, phone }) => {
+export default function Contact ({name, phone, id}) {
+  // console.log('name:', {name, phone, id})
 
-    const [deleteContact] = useAddContactMutation()
+    const [deleteContact] = useDeleteContactMutation()
 
   return (
     <>
-      {name}: {phone}
+      <span>{name}</span>: <span>{phone}</span>
       <ContactButton type="button" onClick={() => deleteContact(id) }>
         Delete
       </ContactButton>
