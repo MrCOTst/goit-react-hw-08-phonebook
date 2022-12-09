@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { NotificationManager } from 'react-notifications';
-// import { useDispatch } from 'react-redux';
-// import { addContact } from 'redux/contactsSlice';
-// import { getContacts } from 'redux/selectors';
-import {useGetContactsQuery, useAddContactMutation} from '..//../redux/contactsSliceApi'
+import { toast } from 'react-toastify';
+import {
+  useGetContactsQuery,
+  useAddContactMutation,
+} from '..//../redux/contactsSliceApi';
 import {
   PhonebookForm,
   PhonebookLabel,
@@ -14,13 +14,9 @@ import {
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  // const dispatch = useDispatch();
-  // const contact = useSelector(getContacts);
 
-  const { data: contact, } = useGetContactsQuery();
+  const { data: contact } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
-
-  // const formAddContact = (name, number) => dispatch(addContact(name, number));
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -46,14 +42,20 @@ export default function ContactForm() {
     );
 
     if (availableContact) {
-      NotificationManager.info(`${name} is already in contacts!`);
+      toast.info(`${name} is already in contacts!`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return;
     } else {
       try {
-        await addContact(value);
-        NotificationManager.success(`${name} successfully added!`, 3000);
+        await addContact({ name, phone });
+        toast.success(`${name} successfully added!`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       } catch (error) {
-        NotificationManager.error('Error adding data!');
+        toast.error('Error adding data!', {
+          position: toast.POSITION.TOP_LEFT,
+        });
         console.log(error);
       }
     }

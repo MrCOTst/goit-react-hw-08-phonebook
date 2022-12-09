@@ -27,7 +27,7 @@ export const ContactItem = styled.li`
     margin-bottom: 0;
   }
 
-  hover,
+  :hover,
   :focus {
     border: 2px solid;
     background-color: #21d4f3;
