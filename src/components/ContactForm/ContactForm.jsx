@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
@@ -9,11 +10,15 @@ import {
   PhonebookLabel,
   PhonebookInput,
   PhonebookButton,
+  PhonebookCheckbox
 } from './ContactForm.styled';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [personal, setPersonal] = useState(false);
+  const navigate = useNavigate();
+  const closeForm = () => navigate('/');
 
   const { data: contact } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
@@ -26,6 +31,10 @@ export default function ContactForm() {
 
       case 'phone':
         setPhone(event.target.value);
+        break;
+
+        case 'checked':
+        setPersonal(event.target.value);
         break;
 
       default:
@@ -48,7 +57,7 @@ export default function ContactForm() {
       return;
     } else {
       try {
-        await addContact({ name, phone });
+        await addContact({ name, phone, personal });
         toast.success(`${name} successfully added!`, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -62,10 +71,16 @@ export default function ContactForm() {
 
     setName('');
     setPhone('');
+    closeForm(false);
   };
 
   return (
     <PhonebookForm onSubmit={handleSubmit}>
+<PhonebookCheckbox
+        type="checkbox"
+        checked={personal}
+        onChange={handleChange}
+      />
       <PhonebookLabel>
         Name
         <PhonebookInput

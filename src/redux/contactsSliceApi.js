@@ -15,7 +15,7 @@ export const contactsApi = createApi({
     }),
 
     getContactById: builder.query({
-      query: (id) => `contacts/${id}`,
+      query: id => `contacts/${id}`,
       providesTags: ['Contacts'],
     }),
 
@@ -40,6 +40,7 @@ export const contactsApi = createApi({
       query: fields => ({
         url: `contacts/${fields.id}`,
         method: 'PUT',
+        body: fields,
       }),
       invalidatesTags: ['Contacts'],
     }),

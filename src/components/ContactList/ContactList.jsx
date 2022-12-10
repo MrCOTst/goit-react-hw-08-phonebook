@@ -3,7 +3,7 @@ import { getFilterValue } from 'redux/selectors';
 import { useSelector } from 'react-redux';
 import { ContactUl, ContactItem } from './ContactList.styled';
 import { useGetContactsQuery } from '..//../redux/contactsSliceApi';
-import Contact from 'components/ContactItem/ContactItem';
+import Contact from 'components/Contact/Contact';
 
 export default function ContactList() {
   const filterValue = useSelector(getFilterValue);
@@ -30,12 +30,16 @@ export default function ContactList() {
         <b>Завантаження</b>
       ) : (
         <ContactUl>
-          {visibleContacts.map(({ name, phone, id }) => (
+          {visibleContacts.map(({ name, phone, id, personal }) => (
             <ContactItem
               key={id}
-              style={{ backgroundColor: getRandomHexColor() }}
+              style={
+                personal === false
+                  ? { backgroundColor: ` #e1c7e9` }
+                  : { backgroundColor: `#00fff2` }
+              }
             >
-              <Contact name={name} phone={phone} id={id} />
+              <Contact name={name} phone={phone} id={id} personal={personal} />
             </ContactItem>
           ))}
         </ContactUl>
@@ -44,9 +48,9 @@ export default function ContactList() {
   );
 }
 
-function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 11111314).toString(16)}`;
-}
+// function getRandomHexColor() {
+//   return `#${Math.floor(Math.random() * 11111314).toString(16)}`;
+// }
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -59,3 +63,4 @@ ContactList.propTypes = {
 };
 
 // 36177215
+// { backgroundColor: getRandomHexColor() }

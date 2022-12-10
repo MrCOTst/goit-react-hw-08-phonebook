@@ -7,6 +7,7 @@ export const FilterLabel = styled.label`
   font-weight: 700;
   font-size: 20px;
   line-height: 1, 875;
+  padding: 10, 5;
 `;
 
 export const FilterInput = styled.input`

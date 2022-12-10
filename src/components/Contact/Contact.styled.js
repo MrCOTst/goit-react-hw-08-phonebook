@@ -28,3 +28,7 @@ display: inline-flex;
     transform: scale(1.01);
   }
 `
+
+export const ContactCheckbox = styled.input`
+color: aliceblue;
+`

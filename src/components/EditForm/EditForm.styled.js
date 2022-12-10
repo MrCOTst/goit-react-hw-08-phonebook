@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PhonebookForm = styled.form`
+export const EditPhonebookForm = styled.form`
   display: flex;
   flex-direction: column;
   height: auto;
@@ -11,7 +11,7 @@ export const PhonebookForm = styled.form`
   background-color: #e5e7c5;
 `;
 
-export const PhonebookLabel = styled.label`
+export const EditPhonebookLabel = styled.label`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,7 +20,7 @@ export const PhonebookLabel = styled.label`
   line-height: 1, 875;
 `;
 
-export const PhonebookInput = styled.input`
+export const EditPhonebookInput = styled.input`
   font: inherit;
   padding: 8px;
   margin: 8px 0 8px 0;
@@ -29,7 +29,7 @@ export const PhonebookInput = styled.input`
   border-color: blue;
 `;
 
-export const PhonebookButton = styled.button`
+export const EditPhonebookButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -59,6 +59,7 @@ export const PhonebookButton = styled.button`
   }
 `;
 
-export const PhonebookCheckbox = styled.input`
+
+export const EditCheckbox = styled.input`
 background-color: azure;
 `;
