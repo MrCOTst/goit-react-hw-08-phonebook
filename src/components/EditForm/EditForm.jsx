@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-
 import {
   EditPhonebookForm,
   EditPhonebookLabel,
@@ -24,10 +22,6 @@ export default function EditForm(value, { handleUpdateContact }, loading) {
         setPhone(event.target.value);
         break;
 
-      case 'checked':
-        setPersonal(event.target.value);
-        break;
-
       default:
         return;
     }
@@ -40,10 +34,11 @@ export default function EditForm(value, { handleUpdateContact }, loading) {
 
   return (
     <EditPhonebookForm onSubmit={handleSubmit}>
+      Personal contact
       <EditCheckbox
         type="checkbox"
         checked={personal}
-        onChange={handleChange}
+        onChange={() => setPersonal(!personal)}
       />
       <EditPhonebookLabel>
         Name

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const PhonebookForm = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: auto;
   padding: 20px;
   border: 2px solid #dbb858;
@@ -18,6 +19,11 @@ export const PhonebookLabel = styled.label`
   font-weight: 700;
   font-size: 20px;
   line-height: 1, 875;
+`;
+
+export const PhonebookText = styled.p`
+  font-weight: 700;
+  font-size: 20px;
 `;
 
 export const PhonebookInput = styled.input`
@@ -60,5 +66,17 @@ export const PhonebookButton = styled.button`
 `;
 
 export const PhonebookCheckbox = styled.input`
-background-color: azure;
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid black;
+`;
+
+export const PhonebookCheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1, 875;
 `;

@@ -10,15 +10,18 @@ import {
   PhonebookLabel,
   PhonebookInput,
   PhonebookButton,
-  PhonebookCheckbox
+  PhonebookCheckbox,
+  PhonebookCheckboxLabel
 } from './ContactForm.styled';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [personal, setPersonal] = useState(false);
+  const [personal, setPersonal] = useState(true);
   const navigate = useNavigate();
   const closeForm = () => navigate('/');
+
+  // console.log('personal:', personal);
 
   const { data: contact } = useGetContactsQuery();
   const [addContact] = useAddContactMutation();
@@ -33,9 +36,9 @@ export default function ContactForm() {
         setPhone(event.target.value);
         break;
 
-        case 'checked':
-        setPersonal(event.target.value);
-        break;
+      // case 'checked':
+      // setPersonal(personal);
+      // break;
 
       default:
         return;
@@ -76,11 +79,15 @@ export default function ContactForm() {
 
   return (
     <PhonebookForm onSubmit={handleSubmit}>
-<PhonebookCheckbox
+      <PhonebookCheckboxLabel>
+      
+      <PhonebookCheckbox
         type="checkbox"
         checked={personal}
-        onChange={handleChange}
-      />
+        onChange={() => setPersonal(!personal)}
+                     />
+      Personal contact
+      </PhonebookCheckboxLabel>
       <PhonebookLabel>
         Name
         <PhonebookInput

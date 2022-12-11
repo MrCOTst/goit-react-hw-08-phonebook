@@ -25,9 +25,21 @@ display: inline-flex;
     border: 2px solid;
     background-color: #21d4f3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    transform: scale(1.01);
+    /* transform: scale(1.01); */
   }
-`
+`;
+
+export const ContactSpanDiv = styled.div`
+display: flex;
+justify-content: space-between;
+margin-left: 5px;
+margin-right: auto;
+`;
+
+export const ContactButtonDiv = styled.div`
+display: flex;
+justify-content: space-between;
+`;
 
 export const ContactCheckbox = styled.input`
 color: aliceblue;

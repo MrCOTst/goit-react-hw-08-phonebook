@@ -1,8 +1,6 @@
-// import {ContactEditorForm} from '..//../components/ContactEditorForm/ContactEditorForm';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import {useGetContactByIdQuery,useUpdateContactMutation} from '../../redux/contactsSliceApi';
-import { Overlay, Modal } from "../../components/ContactEditorForm/ContactEditorForm.styled";
+import { Overlay, Modal, ModalButton, ModalTitle } from "./EditContact.styled";
 import EditForm  from "../../components/EditForm/EditForm";
 
 export default function EditContact () {
@@ -29,13 +27,14 @@ export default function EditContact () {
   return (
       <Overlay>
           <Modal>
+          <ModalTitle>You can make changes to this contact</ModalTitle>
               {contact && (
-                  <EditForm 
+                                  <EditForm 
                   initialValues={{name:contact.name, phone:contact.phone, personal:contact.personal}}
                   onSubmit={handleUpdateContact} 
                   loading={isLoading} />
               )}
-              <button type="button" onClick={closeModal}>Close</button>
+              <ModalButton type="button" onClick={closeModal}>Close</ModalButton>
           </Modal>
       </Overlay>
   );

@@ -1,4 +1,4 @@
-import { ContactButton } from './Contact.styled';
+import { ContactButton, ContactSpanDiv, ContactButtonDiv } from './Contact.styled';
 import { useDeleteContactMutation } from '../../redux/contactsSliceApi';
 import { useNavigate } from 'react-router-dom';
 import { RiFunctionFill } from 'react-icons/ri';
@@ -11,6 +11,7 @@ export default function Contact({ name, phone, id, personal }) {
   const navigate = useNavigate();
   const [deleteContact, { isLoading }] = useDeleteContactMutation();
 
+  
   return (
     <>
       {personal === false ? (
@@ -29,8 +30,15 @@ export default function Contact({ name, phone, id, personal }) {
           }}
         />
       )}
-      <span>{name}</span>: <span>{phone}</span>
-      <ContactButton
+
+      <ContactSpanDiv>
+      <span>{name}</span> :
+      <span>{phone}</span>
+      </ContactSpanDiv>
+      
+
+<ContactButtonDiv>
+<ContactButton
         type="button"
         onClick={() => deleteContact(id)}
         disabled={isLoading}
@@ -44,7 +52,7 @@ export default function Contact({ name, phone, id, personal }) {
         />
         Delete
       </ContactButton>
-      <ContactButton type="button" onClick={() => navigate(`${id}`)}>
+      <ContactButton type="button" onClick={() => navigate(`/${id}`)}>
         <RiEdit2Fill
           style={{
             color: `orange`,
@@ -54,6 +62,10 @@ export default function Contact({ name, phone, id, personal }) {
         />
         Edit
       </ContactButton>
+</ContactButtonDiv>
+
+      
+
     </>
   );
 }

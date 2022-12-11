@@ -1,33 +1,56 @@
 import PropTypes from 'prop-types';
-import { getFilterValue } from 'redux/selectors';
+import { selectFilterStatus, selectFilterValue } from 'redux/selectors';
 import { useSelector } from 'react-redux';
 import { ContactUl, ContactItem } from './ContactList.styled';
 import { useGetContactsQuery } from '..//../redux/contactsSliceApi';
 import Contact from 'components/Contact/Contact';
 
 export default function ContactList() {
-  const filterValue = useSelector(getFilterValue);
+  const filterValue = useSelector(selectFilterValue);
+  const filterStatus = useSelector(selectFilterStatus);
+  // console.log("filterStatus:", filterStatus)
 
   const { data: contacts, error, isLoading } = useGetContactsQuery();
   // console.log('data:', contacts);
   // console.log('error:', error);
   // console.log('isLoading:', isLoading);
 
-  let getVisibleContacts = (contacts, filter) => {
+  let getVisibleContacts = (contacts, filter, status) => {
     if (contacts)
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      );
+      switch (status) {
+        case 'personal':
+          return contacts
+            .filter(contact =>
+              contact.name.toLowerCase().includes(filter.toLowerCase())
+            )
+            .filter(contact => contact.personal === true);
+
+        case 'others':
+          return contacts
+            .filter(contact =>
+              contact.name.toLowerCase().includes(filter.toLowerCase())
+            )
+            .filter(contact => contact.personal === false);
+
+        default:
+          return contacts.filter(contact =>
+            contact.name.toLowerCase().includes(filter.toLowerCase())
+          );
+      }
   };
 
-  const visibleContacts = getVisibleContacts(contacts, filterValue);
+  const visibleContacts = getVisibleContacts(
+    contacts,
+    filterValue,
+    filterStatus
+  );
 
   return (
     <>
-      {error && <p>Помилка завантаження, спробуйте ще раз </p>}
+      {error && <p>Error loading, please try again </p>}
 
       {isLoading ? (
-        <b>Завантаження</b>
+        <b>Loading...</b>
       ) : (
         <ContactUl>
           {visibleContacts.map(({ name, phone, id, personal }) => (
@@ -48,10 +71,6 @@ export default function ContactList() {
   );
 }
 
-// function getRandomHexColor() {
-//   return `#${Math.floor(Math.random() * 11111314).toString(16)}`;
-// }
-
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -61,6 +80,3 @@ ContactList.propTypes = {
     })
   ),
 };
-
-// 36177215
-// { backgroundColor: getRandomHexColor() }
