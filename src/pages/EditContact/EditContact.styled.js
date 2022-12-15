@@ -6,12 +6,13 @@ background-color: #1e2129;
   z-index: 300;
   position: fixed;
   top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 50px;
+  /* padding: 50px; */
   
 `;
 

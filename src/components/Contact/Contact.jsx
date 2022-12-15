@@ -10,7 +10,6 @@ export default function Contact({ name, phone, id, personal }) {
   // console.log('name:', {name, phone, id})
   const navigate = useNavigate();
   const [deleteContact, { isLoading }] = useDeleteContactMutation();
-
   
   return (
     <>
@@ -63,9 +62,6 @@ export default function Contact({ name, phone, id, personal }) {
         Edit
       </ContactButton>
 </ContactButtonDiv>
-
-      
-
     </>
   );
 }

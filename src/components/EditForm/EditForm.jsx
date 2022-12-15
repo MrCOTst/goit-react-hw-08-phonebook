@@ -1,16 +1,18 @@
 import { useState } from 'react';
+import { useUpdateContactMutation } from '../../redux/contactsSliceApi';
 import {
   EditPhonebookForm,
   EditPhonebookLabel,
   EditPhonebookInput,
   EditPhonebookButton,
-  EditCheckbox
+  EditCheckbox,
 } from './EditForm.styled';
 
-export default function EditForm(value, { handleUpdateContact }, loading) {
-  const [name, setName] = useState(value.name);
-  const [phone, setPhone] = useState(value.phone);
-  const [personal, setPersonal] = useState(value.personal);
+export default function EditForm({ initialValues, onSubmit }) {
+  const [updateContact] = useUpdateContactMutation();
+  const [name, setName] = useState(initialValues.name);
+  const [phone, setPhone] = useState(initialValues.phone);
+  const [personal, setPersonal] = useState(initialValues.personal);
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -27,9 +29,15 @@ export default function EditForm(value, { handleUpdateContact }, loading) {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    handleUpdateContact();
+  const handleSubmit = async value => {
+    value.preventDefault();
+
+    try {
+      await updateContact({ id: initialValues.id, name, phone, personal });
+    } catch (error) {
+      console.log(error);
+    }
+    onSubmit();
   };
 
   return (

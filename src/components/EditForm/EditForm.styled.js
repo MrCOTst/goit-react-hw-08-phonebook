@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const EditPhonebookForm = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   height: auto;
   padding: 20px;
   border: 2px solid #dbb858;

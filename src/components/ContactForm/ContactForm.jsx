@@ -11,7 +11,7 @@ import {
   PhonebookInput,
   PhonebookButton,
   PhonebookCheckbox,
-  PhonebookCheckboxLabel
+  PhonebookCheckboxLabel,
 } from './ContactForm.styled';
 
 export default function ContactForm() {
@@ -35,10 +35,6 @@ export default function ContactForm() {
       case 'phone':
         setPhone(event.target.value);
         break;
-
-      // case 'checked':
-      // setPersonal(personal);
-      // break;
 
       default:
         return;
@@ -80,13 +76,12 @@ export default function ContactForm() {
   return (
     <PhonebookForm onSubmit={handleSubmit}>
       <PhonebookCheckboxLabel>
-      
-      <PhonebookCheckbox
-        type="checkbox"
-        checked={personal}
-        onChange={() => setPersonal(!personal)}
-                     />
-      Personal contact
+        <PhonebookCheckbox
+          type="checkbox"
+          checked={personal}
+          onChange={() => setPersonal(!personal)}
+        />
+        Personal contact
       </PhonebookCheckboxLabel>
       <PhonebookLabel>
         Name
