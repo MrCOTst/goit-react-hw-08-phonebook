@@ -5,7 +5,8 @@ import {
   EditPhonebookLabel,
   EditPhonebookInput,
   EditPhonebookButton,
-  EditCheckbox,
+  EditPhonebookCheckbox,
+  EditPhonebookCheckboxLabel
 } from './EditForm.styled';
 
 export default function EditForm({ initialValues, onSubmit }) {
@@ -42,12 +43,14 @@ export default function EditForm({ initialValues, onSubmit }) {
 
   return (
     <EditPhonebookForm onSubmit={handleSubmit}>
-      Personal contact
-      <EditCheckbox
-        type="checkbox"
-        checked={personal}
-        onChange={() => setPersonal(!personal)}
-      />
+      <EditPhonebookCheckboxLabel>
+        <EditPhonebookCheckbox
+          type="checkbox"
+          checked={personal}
+          onChange={() => setPersonal(!personal)}
+        />
+        Personal contact
+      </EditPhonebookCheckboxLabel>
       <EditPhonebookLabel>
         Name
         <EditPhonebookInput

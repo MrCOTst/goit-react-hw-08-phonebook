@@ -2,7 +2,7 @@ import styled from 'styled-components';
 // import { NavLink } from 'react-router-dom';
 
 export const Overlay = styled.div`
-background-color: #1e2129;
+  background-color: #1e2129;
   z-index: 300;
   position: fixed;
   top: 0;
@@ -13,32 +13,32 @@ background-color: #1e2129;
   align-items: center;
   justify-content: space-between;
   /* padding: 50px; */
-  
 `;
 
-export const Modal =styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-margin: auto;
-padding: 15px;
-height: 50%;
-  width: 50%;
+export const Modal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 15px;
+  min-height: 40%;
+  min-width: 40%;
   background-color: #bbd;
   border: 3px solid red;
   border-radius: 10px;
 `;
 
 export const EditForm = styled.div`
-margin: 5px;
- height: 100%;
+  margin: 5px;
+  height: 100%;
   width: 100%;
 `;
 
 export const ModalButton = styled.button`
-display: inline-flex;
+  display: inline-flex;
   align-items: center;
+  margin: 20px 0 0 0;
   /* justify-content: center; */
   /* margin-bottom: 20px; */
   /* margin-right: auto; */
@@ -66,28 +66,9 @@ display: inline-flex;
   }
 `;
 
-export const ModalTitle =styled.p`
-font-weight: 700;
+export const ModalTitle = styled.p`
+  margin: 0 0 20px 0;
+  font-weight: 700;
   font-size: 24px;
   line-height: 1, 875;
 `;
-// export const Link = styled(NavLink)`
-//   margin: 5px 40px 5px 0;
-//   padding: 8px 8px;
-//   border: 2px solid #fff;
-//   border-radius: 4px;
-//   text-decoration: none;
-//   color: white;
-//   font-size: 24px;
-//   font-weight: 500;
-//   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-//   &.active {
-//     color: white;
-//     background-color: orangered;
-//   }
-
-//   :hover {
-//     transform: scale(1.03);
-//   }
-// `;

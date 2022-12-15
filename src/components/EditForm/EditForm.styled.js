@@ -34,8 +34,7 @@ export const EditPhonebookButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  margin-right: auto;
+  margin: 20px auto 0 auto;
   padding: 8px 8px 8px 8px;
   border-radius: 4px;
   border: none;
@@ -61,6 +60,18 @@ export const EditPhonebookButton = styled.button`
 `;
 
 
-export const EditCheckbox = styled.input`
-background-color: azure;
+export const EditPhonebookCheckbox = styled.input`
+margin-right: 8px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid black;
+`;
+
+export const EditPhonebookCheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1, 875;
 `;
