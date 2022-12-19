@@ -16,7 +16,7 @@ import {
 
 export default function ContactForm() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const [personal, setPersonal] = useState(true);
   const navigate = useNavigate();
   const closeForm = () => navigate('/');
@@ -33,7 +33,7 @@ export default function ContactForm() {
         break;
 
       case 'phone':
-        setPhone(event.target.value);
+        setNumber(event.target.value);
         break;
 
       default:
@@ -48,7 +48,7 @@ export default function ContactForm() {
     const availableContact = contact.find(
       contact => contact.name.toLowerCase() === normalizedName
     );
-
+    
     if (availableContact) {
       toast.info(`${name} is already in contacts!`, {
         position: toast.POSITION.TOP_CENTER,
@@ -56,7 +56,7 @@ export default function ContactForm() {
       return;
     } else {
       try {
-        await addContact({ name, phone, personal });
+        await addContact({ name, number });
         toast.success(`${name} successfully added!`, {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -69,7 +69,7 @@ export default function ContactForm() {
     }
 
     setName('');
-    setPhone('');
+    setNumber('');
     closeForm(false);
   };
 
@@ -100,7 +100,7 @@ export default function ContactForm() {
         <PhonebookInput
           type="tel"
           name="phone"
-          value={phone}
+          value={number}
           onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

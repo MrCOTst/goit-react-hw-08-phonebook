@@ -19,13 +19,15 @@ export const LoginForm = () => {
 
   return (
     <LoginFormStyle onSubmit={handleSubmit} autoComplete="off">
+      <h1>Log in</h1>
       <LoginLabel >
         Email
         <LoginInput type="email" name="email" />
       </LoginLabel>
       <LoginLabel >
         Password
-        <LoginInput type="password" name="password" />
+        <LoginInput type="password" name="password" inputmode="numeric" minlength="4"
+       maxlength="8" size="8"/>
       </LoginLabel>
       <LoginButton type="submit">Log In</LoginButton>
     </LoginFormStyle>
