@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/goit-react-hw-08-phonebook/static/css/main.8ce7d5c0.css",
-    "main.js": "/goit-react-hw-08-phonebook/static/js/main.703f272e.js",
+    "main.js": "/goit-react-hw-08-phonebook/static/js/main.e383422f.js",
     "static/js/303.7b78408d.chunk.js": "/goit-react-hw-08-phonebook/static/js/303.7b78408d.chunk.js",
-    "static/js/693.cd6ea5eb.chunk.js": "/goit-react-hw-08-phonebook/static/js/693.cd6ea5eb.chunk.js",
+    "static/js/693.58693f79.chunk.js": "/goit-react-hw-08-phonebook/static/js/693.58693f79.chunk.js",
     "static/js/498.658ba916.chunk.js": "/goit-react-hw-08-phonebook/static/js/498.658ba916.chunk.js",
     "static/js/887.792394ac.chunk.js": "/goit-react-hw-08-phonebook/static/js/887.792394ac.chunk.js",
     "static/js/728.e267d64c.chunk.js": "/goit-react-hw-08-phonebook/static/js/728.e267d64c.chunk.js",
@@ -12,9 +12,9 @@
     "static/js/482.49d54626.chunk.js": "/goit-react-hw-08-phonebook/static/js/482.49d54626.chunk.js",
     "index.html": "/goit-react-hw-08-phonebook/index.html",
     "main.8ce7d5c0.css.map": "/goit-react-hw-08-phonebook/static/css/main.8ce7d5c0.css.map",
-    "main.703f272e.js.map": "/goit-react-hw-08-phonebook/static/js/main.703f272e.js.map",
+    "main.e383422f.js.map": "/goit-react-hw-08-phonebook/static/js/main.e383422f.js.map",
     "303.7b78408d.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/303.7b78408d.chunk.js.map",
-    "693.cd6ea5eb.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/693.cd6ea5eb.chunk.js.map",
+    "693.58693f79.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/693.58693f79.chunk.js.map",
     "498.658ba916.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/498.658ba916.chunk.js.map",
     "887.792394ac.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/887.792394ac.chunk.js.map",
     "728.e267d64c.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/728.e267d64c.chunk.js.map",
@@ -24,6 +24,6 @@
   },
   "entrypoints": [
     "static/css/main.8ce7d5c0.css",
-    "static/js/main.703f272e.js"
+    "static/js/main.e383422f.js"
   ]
 }
