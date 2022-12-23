@@ -32,7 +32,7 @@ export default function ContactForm() {
         setName(event.target.value);
         break;
 
-      case 'phone':
+      case 'number':
         setNumber(event.target.value);
         break;
 
@@ -40,7 +40,7 @@ export default function ContactForm() {
         return;
     }
   };
-
+// console.log('name:', name)
   const handleSubmit = async value => {
     value.preventDefault();
 
@@ -56,8 +56,10 @@ export default function ContactForm() {
       return;
     } else {
       try {
+        console.log('contact:', { name, number });
+        console.log('contact:', contact)
         await addContact({ name, number });
-        toast.success(`${name} successfully added!`, {
+      toast.success(`${name} successfully added!`, {
           position: toast.POSITION.TOP_RIGHT,
         });
       } catch (error) {
@@ -70,7 +72,7 @@ export default function ContactForm() {
 
     setName('');
     setNumber('');
-    closeForm(false);
+    closeForm();
   };
 
   return (
@@ -99,7 +101,7 @@ export default function ContactForm() {
         Number
         <PhonebookInput
           type="tel"
-          name="phone"
+          name="number"
           value={number}
           onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
