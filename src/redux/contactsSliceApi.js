@@ -8,19 +8,18 @@ const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
   async ({ url, method, data, params }) => {
     try {
-      const result = await axios({ url: baseUrl + url, method, data, params })
-      return { data: result.data }
+      const result = await axios({ url: baseUrl + url, method, data, params });
+      return { data: result.data };
     } catch (axiosError) {
-      let err = axiosError
+      let err = axiosError;
       return {
         error: {
           status: err.response?.status,
           data: err.response?.data || err.message,
         },
-      }
+      };
     }
   };
-
 
 export const contactsApi = createApi({
   reducerPath: 'contacts',
@@ -32,25 +31,28 @@ export const contactsApi = createApi({
     getContacts: builder.query({
       query: () => ({
         url: `/contacts`,
-        method: 'get'
+        method: 'get',
       }),
       providesTags: ['Contacts'],
     }),
 
     getContactById: builder.query({
-      query: (id) => ({
+      query: id => ({
         url: `/contacts/${id}`,
-        method: 'get'
+        method: 'get',
       }),
       providesTags: ['Contacts'],
     }),
 
-    addContact: builder.mutation({
-      query: value => ({
-        url: '/contacts',
-        method: 'POST',
-        body: value,
-      }),
+    createContact: builder.mutation({
+      query(contact) {
+        console.log('contactApi:', contact);
+        return {
+          url: `/contacts`,
+          method: 'POST',
+          body: contact,
+        };
+      },
       invalidatesTags: ['Contacts'],
     }),
 
@@ -76,8 +78,16 @@ export const contactsApi = createApi({
 export const {
   useGetContactsQuery,
   useGetContactByIdQuery,
-  useAddContactMutation,
   useDeleteContactMutation,
-  useUpdateContactMutation
-  
+  useUpdateContactMutation,
+  useCreateContactMutation,
 } = contactsApi;
+
+// addContact: builder.mutation({
+//   query: value => ({
+//     url: '/contacts',
+//     method: 'POST',
+//     body: value,
+//   }),
+//   invalidatesTags: ['Contacts'],
+// }),

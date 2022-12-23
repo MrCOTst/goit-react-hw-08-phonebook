@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   useGetContactsQuery,
-  useAddContactMutation,
+  // useAddContactMutation,
+  useCreateContactMutation,
 } from '..//../redux/contactsSliceApi';
 import {
   PhonebookForm,
@@ -24,7 +25,7 @@ export default function ContactForm() {
   // console.log('personal:', personal);
 
   const { data: contact } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const [createContact] = useCreateContactMutation();
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -56,9 +57,11 @@ export default function ContactForm() {
       return;
     } else {
       try {
-        console.log('contact:', { name, number });
-        console.log('contact:', contact)
-        await addContact({ name, number });
+        console.log('contact form:', { name, number });
+        // console.log('contact:', contact)
+        await createContact({ name, number });
+        // console.log('contact:', { name, number });
+        // console.log('contact:', contact)
       toast.success(`${name} successfully added!`, {
           position: toast.POSITION.TOP_RIGHT,
         });
