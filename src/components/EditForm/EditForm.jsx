@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useUpdateContactMutation } from '../../redux/contactsSliceApi';
+import { useUpdateContactMutation,
+  useGetContactsQuery
+ } from '../../redux/contactsSliceApi';
 import {
   EditPhonebookForm,
   EditPhonebookLabel,
@@ -11,9 +13,30 @@ import {
 
 export default function EditForm({ initialValues, onSubmit }) {
   const [updateContact] = useUpdateContactMutation();
-  const [name, setName] = useState(initialValues.name);
-  const [phone, setPhone] = useState(initialValues.phone);
-  const [personal, setPersonal] = useState(initialValues.personal);
+  const { data: contacts, error, isLoading } = useGetContactsQuery();
+  let corectionContacts = (contacts) => {
+    if (contacts)
+    return contacts.filter(contact =>
+      contact.id === initialValues.id)
+       
+  };
+  
+  const contactForEdit = corectionContacts (contacts);
+  console.log('contactForEdit:', contactForEdit.at(0).name, contactForEdit.at(0).number)
+
+  const [name, setName] = useState(contactForEdit.at(0).name);
+  const [number, setNumber] = useState(contactForEdit.at(0).number);
+  const [personal, setPersonal] = useState('');
+
+  
+
+
+
+// contactForEdit.map(({name, number})) => {
+//   setName(name);
+//   setNumber(number)
+// }
+
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -22,7 +45,7 @@ export default function EditForm({ initialValues, onSubmit }) {
         break;
 
       case 'phone':
-        setPhone(event.target.value);
+        setNumber(event.target.value);
         break;
 
       default:
@@ -34,7 +57,7 @@ export default function EditForm({ initialValues, onSubmit }) {
     value.preventDefault();
 
     try {
-      await updateContact({ id: initialValues.id, name, phone, personal });
+      await updateContact({ id: initialValues.id, name, number });
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +91,7 @@ export default function EditForm({ initialValues, onSubmit }) {
         <EditPhonebookInput
           type="tel"
           name="phone"
-          value={phone}
+          value={number}
           onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

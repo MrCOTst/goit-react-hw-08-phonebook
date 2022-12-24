@@ -53,7 +53,7 @@ export default function ContactList() {
         <b>Loading...</b>
       ) : (
         <ContactUl>
-          {visibleContacts.map(({ name, phone, id, personal }) => (
+          {visibleContacts.map(({ name, number, id, personal }) => (
             <ContactItem
               key={id}
               style={
@@ -62,7 +62,7 @@ export default function ContactList() {
                   : { backgroundColor: `#00fff2` }
               }
             >
-              <Contact name={name} phone={phone} id={id} personal={personal} />
+              <Contact name={name} number={number} id={id} personal={personal} />
             </ContactItem>
           ))}
         </ContactUl>

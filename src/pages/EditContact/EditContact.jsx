@@ -1,16 +1,17 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetContactByIdQuery } from '../../redux/contactsSliceApi';
+// import { useGetContactByIdQuery } from '../../redux/contactsSliceApi';
 import { Overlay, Modal, ModalButton, ModalTitle } from './EditContact.styled';
 import EditForm from '../../components/EditForm/EditForm';
 
-export default function EditContact() {
+export default function EditContact({name, number}) {
   const params = useParams();
   const contactId = params.id;
-  // console.log('contactId in EditContact:', contactId);
-  const { data: contact, isLoading } = useGetContactByIdQuery(contactId, {
-    skip: contactId === false,
-  });
-  // console.log('contactId in EditContact:', contactId);
+  // const contactName = params.name;
+  console.log('contactId in EditContact:', contactId );
+ console.log('params:', params);
+  // const { data: contact, isLoading } = useGetContactByIdQuery(contactId);
+ 
+  console.log('name', name);
   const navigate = useNavigate();
 
   const closeModal = () => navigate('/');
@@ -23,18 +24,18 @@ export default function EditContact() {
     <Overlay>
       <Modal>
         <ModalTitle>You can make changes to this contact</ModalTitle>
-        {contact && (
+        
           <EditForm
             initialValues={{
-              id: contact.id,
-              name: contact.name,
-              phone: contact.phone,
-              personal: contact.personal,
+              id: contactId,
+              name: name,
+              number: number,
+              // personal: contact.personal,
             }}
             onSubmit={handleUpdateContact}
-            loading={isLoading}
+            // loading={isLoading}
           />
-        )}
+        
         <ModalButton type="button" onClick={closeModal}>
           Close
         </ModalButton>

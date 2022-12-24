@@ -6,7 +6,7 @@ import { RiStarSFill } from 'react-icons/ri';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { RiEdit2Fill } from 'react-icons/ri';
 
-export default function Contact({ name, phone, id, personal }) {
+export default function Contact({ name, number, id, personal }) {
   // console.log('name:', {name, phone, id})
   const navigate = useNavigate();
   const [deleteContact, { isLoading }] = useDeleteContactMutation();
@@ -32,7 +32,7 @@ export default function Contact({ name, phone, id, personal }) {
 
       <ContactSpanDiv>
       <span>{name}</span> :
-      <span>{phone}</span>
+      <span>{number}</span>
       </ContactSpanDiv>
       
 
@@ -51,7 +51,7 @@ export default function Contact({ name, phone, id, personal }) {
         />
         Delete
       </ContactButton>
-      <ContactButton type="button" onClick={() => navigate(`/${id}`)}>
+      <ContactButton type="button" onClick={() => navigate(`/${id}`)} >
         <RiEdit2Fill
           style={{
             color: `orange`,
