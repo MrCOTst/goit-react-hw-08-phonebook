@@ -1,26 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// import axios from '../../node_modules/axios/index';
-// import { setAuthHeader } from './auth/operations';
 
-// const BASE_URL = 'https://639092530bf398c73a8c0f78.mockapi.io/';
 const BASE_URL = 'https://connections-api.herokuapp.com';
-
-// const axiosBaseQuery =
-//   ({ baseUrl } = { baseUrl: '' }) =>
-//   async ({ url, method, data, params }) => {
-//     try {
-//       const result = await axios({ url: baseUrl + url, method, data, params });
-//       return { data: result.data };
-//     } catch (axiosError) {
-//       let err = axiosError;
-//       return {
-//         error: {
-//           status: err.response?.status,
-//           data: err.response?.data || err.message,
-//         },
-//       };
-//     }
-//   };
 
 export const contactsApi = createApi({
   reducerPath: 'contacts',
@@ -28,14 +8,12 @@ export const contactsApi = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       // By default, if we have a token in the store, let's use that for authenticated requests
-      const token = (getState()).auth.token
+      const token = getState().auth.token;
       if (token) {
-        headers.set('authorization', `Bearer ${token}`)
+        headers.set('authorization', `Bearer ${token}`);
       }
-      return headers
+      return headers;
     },
-
-
   }),
   tagTypes: ['Contacts'],
   endpoints: builder => ({
@@ -48,13 +26,12 @@ export const contactsApi = createApi({
     }),
 
     getContactById: builder.query({
-      query (id) {
+      query(id) {
         console.log('contactApi:', id);
         return {
           url: `/contacts/${id}`,
-        method: 'get',
-        }
-        
+          method: 'get',
+        };
       },
       providesTags: ['Contacts'],
     }),
@@ -80,10 +57,10 @@ export const contactsApi = createApi({
     }),
 
     updateContact: builder.mutation({
-      query: ({id, name, number}) => ({
+      query: ({ id, name, number }) => ({
         url: `/contacts/${id}`,
         method: 'PATCH',
-        body: {name, number},
+        body: { name, number },
       }),
       invalidatesTags: ['Contacts'],
     }),
@@ -151,7 +128,6 @@ export const {
 //     }),
 //   }),
 // });
-
 
 // addContact: builder.mutation({
 //   query: value => ({

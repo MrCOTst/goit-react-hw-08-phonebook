@@ -1,42 +1,45 @@
 import { useState } from 'react';
-import { useUpdateContactMutation,
-  useGetContactsQuery
- } from '../../redux/contactsSliceApi';
+import {
+  useUpdateContactMutation,
+  useGetContactsQuery,
+} from '../../redux/contactsSliceApi';
 import {
   EditPhonebookForm,
   EditPhonebookLabel,
   EditPhonebookInput,
   EditPhonebookButton,
   EditPhonebookCheckbox,
-  EditPhonebookCheckboxLabel
+  EditPhonebookCheckboxLabel,
 } from './EditForm.styled';
+import { localStrg } from '../../helpers/localStrg';
 
 export default function EditForm({ initialValues, onSubmit }) {
   const [updateContact] = useUpdateContactMutation();
-  const { data: contacts, error, isLoading } = useGetContactsQuery();
-  let corectionContacts = (contacts) => {
+  const { data: contacts } = useGetContactsQuery();
+
+  // console.log (contacts)
+  let corectionContacts = contacts => {
     if (contacts)
-    return contacts.filter(contact =>
-      contact.id === initialValues.id)
-       
+      return contacts.filter(contact => contact.id === initialValues.id);
   };
+
+  const contactForEdit = corectionContacts(contacts);
+  // console.log(
+  //   'contactForEdit:',
+  //   contactForEdit.at(0).name,
+  //   contactForEdit.at(0).number
+  // );
   
-  const contactForEdit = corectionContacts (contacts);
-  console.log('contactForEdit:', contactForEdit.at(0).name, contactForEdit.at(0).number)
+
 
   const [name, setName] = useState(contactForEdit.at(0).name);
   const [number, setNumber] = useState(contactForEdit.at(0).number);
-  const [personal, setPersonal] = useState('');
+  const [personal, setPersonal] = useState(true);
 
-  
-
-
-
-// contactForEdit.map(({name, number})) => {
-//   setName(name);
-//   setNumber(number)
-// }
-
+  // contactForEdit.map(({name, number})) => {
+  //   setName(name);
+  //   setNumber(number)
+  // }
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -58,11 +61,68 @@ export default function EditForm({ initialValues, onSubmit }) {
 
     try {
       await updateContact({ id: initialValues.id, name, number });
+      localStrg.save('currentContact', { name, number, personal });
+      
     } catch (error) {
       console.log(error);
     }
+    updateLocalStorage ();
     onSubmit();
   };
+  
+function updateLocalStorage () {
+  if(!localStrg.load('keyContactsStore')) {
+    addContactToLocal()
+  } else {
+    editContactToLocal ()
+
+  }
+  
+}
+
+function addContactToLocal() {
+
+  if (!localStrg.load('keyContactsStore')) {
+    localStrg.save('keyContactsStore', []);
+    // console.log(localStrg.load('keyContactsStore'))
+    let currentContactsState = localStrg.load('keyContactsStore');
+    const currentContact = localStrg.load('currentContact');
+    // console.log('currentContact befor if:', currentContact);
+    // console.log('currentContactsState befor if:', currentContactsState);
+    (currentContactsState = [currentContact]);
+    localStrg.save('keyContactsStore', currentContactsState);
+  } else {
+    let currentContactsState = localStrg.load('keyContactsStore');
+    const currentContact = localStrg.load('currentContact');
+    currentContactsState.push(currentContact);
+    localStrg.save('keyContactsStore', currentContactsState);
+  }
+
+}
+
+function editContactToLocal () {
+  let currentContactsState = localStrg.load('keyContactsStore');
+  // console.log('currentContactsState:', currentContactsState);
+  let correctContactPerson;
+  let correctContactPersonIndex;
+  if (currentContactsState) {
+    correctContactPerson = currentContactsState.find(
+      contact => contact.name === contactForEdit.at(0).name
+    );
+    correctContactPersonIndex = currentContactsState.findIndex(
+      contact => contact.name === contactForEdit.at(0).name
+    );
+// localStrg.del('keyContactsStore');
+
+currentContactsState.splice(correctContactPersonIndex, 1, { name, number, personal });
+console.log('currentContactsState:', currentContactsState);
+localStrg.save('keyContactsStore', currentContactsState)
+
+  }
+  
+console.log('correctContactPerson:', correctContactPerson);
+console.log('correctContactPersonIndex:', correctContactPersonIndex);
+}
 
   return (
     <EditPhonebookForm onSubmit={handleSubmit}>

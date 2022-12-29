@@ -7,11 +7,11 @@ export default function EditContact({name, number}) {
   const params = useParams();
   const contactId = params.id;
   // const contactName = params.name;
-  console.log('contactId in EditContact:', contactId );
- console.log('params:', params);
+//   console.log('contactId in EditContact:', contactId );
+//  console.log('params:', params);
   // const { data: contact, isLoading } = useGetContactByIdQuery(contactId);
  
-  console.log('name', name);
+  // console.log('name', name);
   const navigate = useNavigate();
 
   const closeModal = () => navigate('/');

@@ -14,6 +14,8 @@ import {
   PhonebookCheckbox,
   PhonebookCheckboxLabel,
 } from './ContactForm.styled';
+import { localStrg } from '../../helpers/localStrg';
+// import addContactToLocal from '../../helpers/addStateToLocalStor'
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -21,7 +23,8 @@ export default function ContactForm() {
   const [personal, setPersonal] = useState(true);
   const navigate = useNavigate();
   const closeForm = () => navigate('/');
-
+  // const STORAGE_KEY = 'contact-state';
+  // let data = {};
   // console.log('personal:', personal);
 
   const { data: contact } = useGetContactsQuery();
@@ -41,15 +44,15 @@ export default function ContactForm() {
         return;
     }
   };
-// console.log('name:', name)
-  const handleSubmit = async value => {
-    value.preventDefault();
+  // console.log('name:', name)
+  const handleSubmit = async e => {
+    e.preventDefault();
 
     const normalizedName = name.toLowerCase();
     const availableContact = contact.find(
       contact => contact.name.toLowerCase() === normalizedName
     );
-    
+
     if (availableContact) {
       toast.info(`${name} is already in contacts!`, {
         position: toast.POSITION.TOP_CENTER,
@@ -57,12 +60,17 @@ export default function ContactForm() {
       return;
     } else {
       try {
-        console.log('contact form:', { name, number });
+        // console.log('contact form:', { name, number });
         // console.log('contact:', contact)
         await createContact({ name, number });
+        // data[contact.id, personal]
+        // data = {name, number, personal};
+        localStrg.save('currentContact', { name, number, personal });
+
+        // localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         // console.log('contact:', { name, number });
         // console.log('contact:', contact)
-      toast.success(`${name} successfully added!`, {
+        toast.success(`${name} successfully added!`, {
           position: toast.POSITION.TOP_RIGHT,
         });
       } catch (error) {
@@ -72,11 +80,50 @@ export default function ContactForm() {
         console.log(error);
       }
     }
+    addContactToLocal();
 
     setName('');
     setNumber('');
-    closeForm();
+    closeForm(false);
   };
+  
+
+  function addContactToLocal() {
+
+    if (!localStrg.load('keyContactsStore')) {
+      localStrg.save('keyContactsStore', []);
+      // console.log(localStrg.load('keyContactsStore'))
+      let currentContactsState = localStrg.load('keyContactsStore');
+      const currentContact = localStrg.load('currentContact');
+      // console.log('currentContact befor if:', currentContact);
+      // console.log('currentContactsState befor if:', currentContactsState);
+      (currentContactsState = [currentContact]);
+      localStrg.save('keyContactsStore', currentContactsState);
+    } else {
+      let currentContactsState = localStrg.load('keyContactsStore');
+      const currentContact = localStrg.load('currentContact');
+      currentContactsState.push(currentContact);
+      localStrg.save('keyContactsStore', currentContactsState);
+    }
+
+  }
+
+  // function addContactToLocal() {
+  //   let currentContactsState = localStrg.load('keyContactsStore');
+  //   const currentContact = localStrg.load('currentContact');
+  //   let contactToAddToLib;
+  //   if (currentContactsState) {
+  //     contactToAddToLib = currentContactsState.find(
+  //       contact => contact.name === currentContact.name
+  //     );
+  //   }
+
+  //   if (!currentContactsState) {
+  //     if (contactToAddToLib) currentContactsState = [currentContact];
+  //   } else currentContactsState.push(currentContact);
+  //   localStrg.save('keyContactsStore', currentContactsState);
+
+  // }
 
   return (
     <PhonebookForm onSubmit={handleSubmit}>

@@ -30,11 +30,18 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
+// const contactPersistConfig = {
+//   key: 'contact',
+//   storage,
+//   whitelist: ['queries:"GetContacts"'],
+// };
+
 export const store = configureStore({
   reducer: {
     [contactsApi.reducerPath]: contactsApi.reducer,
     filter: filterReducer,
     auth: persistReducer(authPersistConfig, authReducer),
+    // contacts:persistReducer(contactPersistConfig, contactsApi.reducer)
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
