@@ -27,7 +27,7 @@ export const contactsApi = createApi({
 
     getContactById: builder.query({
       query(id) {
-        console.log('contactApi:', id);
+        // console.log('contactApi:', id);
         return {
           url: `/contacts/${id}`,
           method: 'get',
@@ -49,10 +49,13 @@ export const contactsApi = createApi({
     }),
 
     deleteContact: builder.mutation({
-      query: id => ({
-        url: `/contacts/${id}`,
-        method: 'DELETE',
-      }),
+      query (id) {
+        // console.log('contactApi:', id);
+        return {
+          url: `/contacts/${id}`,
+          method: 'DELETE',
+        }
+      },
       invalidatesTags: ['Contacts'],
     }),
 
@@ -74,66 +77,3 @@ export const {
   useUpdateContactMutation,
   useCreateContactMutation,
 } = contactsApi;
-
-// export const contactsApi = createApi({
-//   reducerPath: 'contacts',
-//   baseQuery: axiosBaseQuery({
-//     baseUrl: BASE_URL,
-//   }),
-//   tagTypes: ['Contacts'],
-//   endpoints: builder => ({
-//     getContacts: builder.query({
-//       query: () => ({
-//         url: `/contacts`,
-//         method: 'get',
-//       }),
-//       providesTags: ['Contacts'],
-//     }),
-
-//     getContactById: builder.query({
-//       query: id => ({
-//         url: `/contacts/${id}`,
-//         method: 'get',
-//       }),
-//       providesTags: ['Contacts'],
-//     }),
-
-//     createContact: builder.mutation({
-//       query(contact) {
-//         console.log('contactApi:', contact);
-//         return {
-//           url: `/contacts`,
-//           method: 'post',
-//           body: contact,
-//         };
-//       },
-//       invalidatesTags: ['Contacts'],
-//     }),
-
-//     deleteContact: builder.mutation({
-//       query: id => ({
-//         url: `/contacts/${id}`,
-//         method: 'DELETE',
-//       }),
-//       invalidatesTags: ['Contacts'],
-//     }),
-
-//     updateContact: builder.mutation({
-//       query: fields => ({
-//         url: `/contacts/${fields.id}`,
-//         method: 'PATCH',
-//         body: fields,
-//       }),
-//       invalidatesTags: ['Contacts'],
-//     }),
-//   }),
-// });
-
-// addContact: builder.mutation({
-//   query: value => ({
-//     url: '/contacts',
-//     method: 'POST',
-//     body: value,
-//   }),
-//   invalidatesTags: ['Contacts'],
-// }),

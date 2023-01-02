@@ -16,6 +16,7 @@ import { localStrg } from '../../helpers/localStrg';
 export default function EditForm({ initialValues, onSubmit }) {
   const [updateContact] = useUpdateContactMutation();
   const { data: contacts } = useGetContactsQuery();
+  const RENDER_STORAGE_KEY = 'contact-for-render-state';
 
   // console.log (contacts)
   let corectionContacts = contacts => {
@@ -29,17 +30,10 @@ export default function EditForm({ initialValues, onSubmit }) {
   //   contactForEdit.at(0).name,
   //   contactForEdit.at(0).number
   // );
-  
-
-
+  const id = initialValues.id;
   const [name, setName] = useState(contactForEdit.at(0).name);
   const [number, setNumber] = useState(contactForEdit.at(0).number);
   const [personal, setPersonal] = useState(true);
-
-  // contactForEdit.map(({name, number})) => {
-  //   setName(name);
-  //   setNumber(number)
-  // }
 
   const handleChange = event => {
     switch (event.target.name) {
@@ -61,68 +55,60 @@ export default function EditForm({ initialValues, onSubmit }) {
 
     try {
       await updateContact({ id: initialValues.id, name, number });
-      localStrg.save('currentContact', { name, number, personal });
-      
     } catch (error) {
       console.log(error);
     }
-    updateLocalStorage ();
+    updateLocalStorage();
     onSubmit();
   };
-  
-function updateLocalStorage () {
-  if(!localStrg.load('keyContactsStore')) {
-    addContactToLocal()
-  } else {
-    editContactToLocal ()
 
-  }
-  
-}
-
-function addContactToLocal() {
-
-  if (!localStrg.load('keyContactsStore')) {
-    localStrg.save('keyContactsStore', []);
-    // console.log(localStrg.load('keyContactsStore'))
-    let currentContactsState = localStrg.load('keyContactsStore');
-    const currentContact = localStrg.load('currentContact');
-    // console.log('currentContact befor if:', currentContact);
-    // console.log('currentContactsState befor if:', currentContactsState);
-    (currentContactsState = [currentContact]);
-    localStrg.save('keyContactsStore', currentContactsState);
-  } else {
-    let currentContactsState = localStrg.load('keyContactsStore');
-    const currentContact = localStrg.load('currentContact');
-    currentContactsState.push(currentContact);
-    localStrg.save('keyContactsStore', currentContactsState);
+  function updateLocalStorage() {
+    if (!localStrg.load(RENDER_STORAGE_KEY)) {
+      addContactToLocal();
+    } else {
+      editContactToLocal();
+    }
   }
 
-}
+  function addContactToLocal() {
+    localStrg.save(RENDER_STORAGE_KEY, []);
+    let currentContactsState = localStrg.load(RENDER_STORAGE_KEY);
+    const contactsFromBack = contacts;
 
-function editContactToLocal () {
-  let currentContactsState = localStrg.load('keyContactsStore');
-  // console.log('currentContactsState:', currentContactsState);
-  let correctContactPerson;
-  let correctContactPersonIndex;
-  if (currentContactsState) {
-    correctContactPerson = currentContactsState.find(
-      contact => contact.name === contactForEdit.at(0).name
-    );
-    correctContactPersonIndex = currentContactsState.findIndex(
-      contact => contact.name === contactForEdit.at(0).name
-    );
-// localStrg.del('keyContactsStore');
-
-currentContactsState.splice(correctContactPersonIndex, 1, { name, number, personal });
-console.log('currentContactsState:', currentContactsState);
-localStrg.save('keyContactsStore', currentContactsState)
-
+    localStrg.save(RENDER_STORAGE_KEY, contactsFromBack);
+    currentContactsState = localStrg.load(RENDER_STORAGE_KEY);
+    currentContactsState.map(contact => (contact.personal = true));
+    localStrg.save(RENDER_STORAGE_KEY, currentContactsState);
   }
-  
-console.log('correctContactPerson:', correctContactPerson);
-console.log('correctContactPersonIndex:', correctContactPersonIndex);
-}
+
+  function editContactToLocal() {
+    let currentContactsState = localStrg.load(RENDER_STORAGE_KEY);
+
+    let correctContactPersonIndex;
+    if (currentContactsState) {
+      currentContactsState.find(
+        contact => contact.name === contactForEdit.at(0).name
+      );
+      correctContactPersonIndex = currentContactsState.findIndex(
+        contact => contact.name === contactForEdit.at(0).name
+      );
+
+      if (correctContactPersonIndex < 0) {
+        currentContactsState.push({ id, name, number, personal });
+      } else {
+        currentContactsState.splice(correctContactPersonIndex, 1, {
+          id,
+          name,
+          number,
+          personal,
+        });
+      }
+      // console.log('currentContactsState:', currentContactsState);
+      localStrg.save(RENDER_STORAGE_KEY, currentContactsState);
+    }
+    // console.log('correctContactPerson:', correctContactPerson);
+    // console.log('correctContactPersonIndex:', correctContactPersonIndex);
+  }
 
   return (
     <EditPhonebookForm onSubmit={handleSubmit}>
