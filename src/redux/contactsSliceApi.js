@@ -49,12 +49,12 @@ export const contactsApi = createApi({
     }),
 
     deleteContact: builder.mutation({
-      query (id) {
+      query(id) {
         // console.log('contactApi:', id);
         return {
           url: `/contacts/${id}`,
           method: 'DELETE',
-        }
+        };
       },
       invalidatesTags: ['Contacts'],
     }),

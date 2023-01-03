@@ -1,5 +1,7 @@
 import { ButtonFilter } from './Button.styled';
 
+
+
 export const Button = ({
   selected = false,
   type = 'button',
@@ -11,7 +13,8 @@ export const Button = ({
       style={
         selected === false
           ? { backgroundColor: ` #fff`, color: `#000` }
-          : { backgroundColor: `#1976d2`, color: `#fff`}
+          : { backgroundColor: `#1976d2`, color: `#fff`,
+              border: 'solid' }
       }
       type={type}
       {...otherProps}

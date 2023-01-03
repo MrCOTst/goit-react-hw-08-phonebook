@@ -14,7 +14,6 @@ const Filter = () => {
   return (
     <FilterLabel>
       <FilterTitle>Find contacts by Name</FilterTitle>
-      <StatusFilter />
       <FilterDiv>
         <RiSearchLine
           style={{
@@ -28,8 +27,11 @@ const Filter = () => {
           type="text"
           value={filter}
           onChange={handleFilterChange}
+          placeholder="Anny Benne"
         ></FilterInput>
+
       </FilterDiv>
+      <StatusFilter />
     </FilterLabel>
   );
 };

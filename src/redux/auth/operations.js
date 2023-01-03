@@ -1,19 +1,18 @@
-import axios from "../../../node_modules/axios/index";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import axios from '../../../node_modules/axios/index';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 // Utility to add JWT
 export const setAuthHeader = token => {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  };
-  
-  // Utility to remove JWT
-  const clearAuthHeader = () => {
-    axios.defaults.headers.common.Authorization = '';
-  };
-  
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+// Utility to remove JWT
+const clearAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = '';
+};
+
 /*
  * POST @ /users/signup
  * body: { name, email, password }

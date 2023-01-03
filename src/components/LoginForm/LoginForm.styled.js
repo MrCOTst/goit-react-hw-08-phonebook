@@ -5,6 +5,7 @@ export const LoginFormStyle = styled.form`
   flex-direction: column;
   justify-content: center;
   height: auto;
+  margin: 20px 0 0 0;
   padding: 20px;
   border: 2px solid #dbb858;
   border-radius: 10px;
@@ -25,7 +26,7 @@ export const LoginInput = styled.input`
   font: inherit;
   padding: 8px;
   margin: 8px 0 8px 0;
-  max-width: 80%;
+  border: solid 1px;
   border-radius: 8px;
   border-color: blue;
 `;
@@ -58,4 +59,11 @@ export const LoginButton = styled.button`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     transform: scale(1.01);
   }
+`;
+
+export const LoginH1 = styled.h1`
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
 `;

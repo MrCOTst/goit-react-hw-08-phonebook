@@ -25,7 +25,8 @@ export const EditPhonebookInput = styled.input`
   font: inherit;
   padding: 8px;
   margin: 8px 0 8px 0;
-  max-width: 80%;
+  max-width: 90%;
+  border: 1px solid;
   border-radius: 8px;
   border-color: blue;
 `;
@@ -59,9 +60,8 @@ export const EditPhonebookButton = styled.button`
   }
 `;
 
-
 export const EditPhonebookCheckbox = styled.input`
-margin-right: 8px;
+  margin-right: 8px;
   width: 24px;
   height: 24px;
   border: 1px solid black;

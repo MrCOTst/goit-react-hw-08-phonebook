@@ -21,15 +21,20 @@ export default function Contact({ id, name, number }) {
   let currentContactsState = localStrg.load(RENDER_STORAGE_KEY);
   let personal = true;
 
-  if (currentContactsState && personal) {
+  if (currentContactsState) {
     personal = currentContactsState.find(
       contact => contact.name === name
     ).personal;
     // console.log('personal', personal)
   }
 
-  const handleDelete = () => {
-    deleteContact(id);
+  const handleDelete = async () => {
+    try {
+      await deleteContact(id);
+    } catch (error) {
+      console.log(error);
+    }
+
     deleteContactFromLocal();
   };
 
@@ -73,7 +78,7 @@ export default function Contact({ id, name, number }) {
       )}
 
       <ContactSpanDiv>
-        <span>{name}</span> :<span>{number}</span>
+        <span>{name} :</span> <span>{number}</span>
       </ContactSpanDiv>
 
       <ContactButtonDiv>

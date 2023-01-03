@@ -31,5 +31,3 @@ const del = key => {
 };
 
 export const localStrg = { save, load, del };
-
-

@@ -7,11 +7,11 @@ import {
   EditPhonebookForm,
   EditPhonebookLabel,
   EditPhonebookInput,
-  EditPhonebookButton,
   EditPhonebookCheckbox,
   EditPhonebookCheckboxLabel,
 } from './EditForm.styled';
 import { localStrg } from '../../helpers/localStrg';
+import { Button } from '@chakra-ui/react';
 
 export default function EditForm({ initialValues, onSubmit }) {
   const [updateContact] = useUpdateContactMutation();
@@ -144,7 +144,33 @@ export default function EditForm({ initialValues, onSubmit }) {
           required
         />
       </EditPhonebookLabel>
-      <EditPhonebookButton type="submit">Save change</EditPhonebookButton>
+    
+      <Button
+        type="submit"
+        colorScheme="messenger"
+        borderWidth="1px"
+        borderColor="messenger"
+        m="12px auto 2px auto"
+        p="2px 20px 4px 20px"
+        fontSize="24px"
+        _hover={{
+          bg: 'messenger',
+          color: 'white',
+          borderWidth: '1px',
+          borderColor: 'orange',
+          fontSize: '25',
+        }}
+        _active={{
+          bg: 'tomato',
+          color: 'teal.500',
+        }}
+        _selected={{
+          bg: 'tomato',
+          color: 'white',
+        }}
+      >
+        Save change
+      </Button>
     </EditPhonebookForm>
   );
 }

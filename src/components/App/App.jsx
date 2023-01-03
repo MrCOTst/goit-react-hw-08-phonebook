@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useEffect, lazy } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const Home = lazy(() => import('../../pages/Home/Home'));
 const NewContact = lazy(() => import('../../pages/NewContact/NewContact'));
@@ -25,39 +27,40 @@ export default function App() {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  return  isRefreshing ? (
+  return isRefreshing ? (
     <b>Refreshing user...</b>
-  ) : 
-    (<>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-        <Route
-          path="/register"
-          element={
-            <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <RestrictedRoute redirectTo="/" component={<LoginPage />} />
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute redirectTo="/login" component={<Home/>} />
-          }
-        />
-          <Route path="/" element={<Home />} />
-          <Route path="/welcom" element={<Welcome />} />
-          <Route path="/newcontact" element={<NewContact />} />
-          <Route path="/:id" element={<EditContact />} />
-          <Route path="*" element={<NotFound />}></Route>
-        </Route>
-      </Routes>
-      <ToastContainer />
-    </>)
-  ;
+  ) : (
+    <>
+      <ChakraProvider>
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route
+              path="/register"
+              element={
+                <RestrictedRoute redirectTo="/" component={<RegisterPage />} />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <RestrictedRoute redirectTo="/" component={<LoginPage />} />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute redirectTo="/login" component={<Home />} />
+              }
+            />
+            <Route path="/" element={<Home />} />
+            <Route path="/welcom" element={<Welcome />} />
+            <Route path="/newcontact" element={<NewContact />} />
+            <Route path="/:id" element={<EditContact />} />
+            <Route path="*" element={<NotFound />}></Route>
+          </Route>
+        </Routes>
+        <ToastContainer />
+      </ChakraProvider>
+    </>
+  );
 }
- 

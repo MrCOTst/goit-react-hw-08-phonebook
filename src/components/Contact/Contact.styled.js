@@ -35,6 +35,8 @@ display: inline-flex;
   line-height: 1, 875;
   text-transform: uppercase;
   background-color: #2196f3;
+  border: 2px solid;
+  border-color: #2196f3;
   color: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   cursor: pointer;

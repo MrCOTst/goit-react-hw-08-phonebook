@@ -8,12 +8,13 @@ import {
 import {
   PhonebookForm,
   PhonebookLabel,
-  PhonebookInput,
-  PhonebookButton,
   PhonebookCheckbox,
   PhonebookCheckboxLabel,
 } from './ContactForm.styled';
 import { localStrg } from '../../helpers/localStrg';
+
+import { InputGroup, InputLeftElement, Button, Input } from '@chakra-ui/react';
+import { PhoneIcon } from '@chakra-ui/icons';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -101,31 +102,79 @@ export default function ContactForm() {
         />
         Personal contact
       </PhonebookCheckboxLabel>
+
       <PhonebookLabel>
         Name
-        <PhonebookInput
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
+        <InputGroup>
+          <Input
+            type="text"
+            placeholder="Print your name"
+            name="name"
+            value={name}
+            onChange={handleChange}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            borderColor="blue"
+            bg="white"
+            size="lg"
+            fontSize="24px"
+            mt="2"
+          />
+        </InputGroup>
       </PhonebookLabel>
+
       <PhonebookLabel>
         Number
-        <PhonebookInput
-          type="tel"
-          name="number"
-          value={number}
-          onChange={handleChange}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-        />
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<PhoneIcon color="gray.600" mt="6" w="24" />}
+          />
+          <Input
+            type="tel"
+            placeholder="Phone number"
+            name="number"
+            value={number}
+            onChange={handleChange}
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            borderColor="blue"
+            bg="white"
+            size="lg"
+            fontSize="24px"
+            mt="2"
+          />
+        </InputGroup>
       </PhonebookLabel>
-      <PhonebookButton type="submit">Add contact</PhonebookButton>
+
+      <Button
+        type="submit"
+        colorScheme="messenger"
+        borderWidth="1px"
+        borderColor="messenger"
+        m="6px auto 2px auto"
+        p="2px 20px 4px 20px"
+        fontSize="24px"
+        _hover={{
+          bg: 'messenger',
+          color: 'white',
+          borderWidth: '1px',
+          borderColor: 'orange',
+          fontSize: '25',
+        }}
+        _active={{
+          bg: 'tomato',
+          color: 'teal.500',
+        }}
+        _selected={{
+          bg: 'tomato',
+          color: 'white',
+        }}
+      >
+        Add contact
+      </Button>
     </PhonebookForm>
   );
 }

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useAuth } from 'hooks';
 import { AuthNav } from 'components/AuthNav/AuthNav';
 import { UserNav } from 'components/UserNav/UserNav';
-import { Container, Header } from './SharedLayout.styled';
+import { Container, Header, HeaderNav } from './SharedLayout.styled';
 import Spinner from '../Spinner/Spinner';
 
 export default function SharedLayout() {
@@ -11,7 +11,7 @@ export default function SharedLayout() {
   return (
     <Container>
       <Header>
-        <nav>{isLoggedIn ? <UserNav /> : <AuthNav />}</nav>
+        <HeaderNav>{isLoggedIn ? <UserNav /> : <AuthNav />}</HeaderNav>
       </Header>
       <Suspense fallback={<Spinner />}>
         <Outlet />

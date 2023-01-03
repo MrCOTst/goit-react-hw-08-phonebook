@@ -5,6 +5,7 @@ export const PhonebookForm = styled.form`
   flex-direction: column;
   justify-content: center;
   height: auto;
+  margin: 20px 0 0 0;
   padding: 20px;
   border: 2px solid #dbb858;
   border-radius: 10px;
@@ -16,8 +17,9 @@ export const PhonebookLabel = styled.label`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 10px 0 10px 0;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1, 875;
 `;
 
